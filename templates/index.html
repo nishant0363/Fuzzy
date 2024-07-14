@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Merge Data with SHRUG</title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            font-family: Arial, sans-serif;
+            text-align: center;
+        }
+        h1 {
+            margin-bottom: 20px;
+        }
+        p {
+            margin-bottom: 40px;
+            max-width: 600px;
+        }
+        form {
+            margin-bottom: 40px;
+        }
+        footer {
+            margin-top: auto;
+            padding-top: 20px;
+            border-top: 1px solid #ddd;
+        }
+        .update-box {
+            width: 80%;
+            max-height: 300px;
+            overflow-y: scroll;
+            border: 1px solid #ccc;
+            padding: 10px;
+            margin-top: 20px;
+            text-align: left;
+            font-size: 12px;
+            font-family: 'Courier New', Courier, monospace;
+        }
+        select {
+            width: 200px; /* Adjust this value to set the width of the dropdown */
+        }
+    </style>
+</head>
+<body>
+    <h1>Merge Data with SHRUG</h1>
+    <p>This application helps you to merge your dataset with a variety of SHRUG datasets. Upload your CSV file and choose the SHRUG dataset to merge with. Refer to this following document to see the format of data to be uploaded and results expected.</p>
+    <form action="/upload" method="post" enctype="multipart/form-data">
+        <input type="file" name="file" required>
+        <select name="dataset" required>
+            <option value="" disabled selected>Select Shrug Dataset</option>
+            <option value="vcf">Satellite-derived Elevation</option>
+        </select>
+        <button type="submit">Upload</button>
+    </form>
+    <div class="update-box" id="update-box">
+        <!-- Updates from mapping.txt will be displayed here -->
+    </div>
+    <footer>
+        <p>Nishant - Intern @ IIM Bangalore<br>Jal Jeevan Mission</p>
+    </footer>
+
+    <script>
+        function fetchUpdates() {
+            fetch('/updates')
+                .then(response => response.text())
+                .then(data => {
+                    const updateBox = document.getElementById('update-box');
+                    const shouldScrollToBottom = updateBox.scrollTop + updateBox.clientHeight === updateBox.scrollHeight;
+
+                    updateBox.innerHTML = data.replace(/\n/g, '<br>'); // Replace newlines with <br> for display
+
+                    if (shouldScrollToBottom) {
+                        updateBox.scrollTop = updateBox.scrollHeight; // Scroll to bottom only if user is already at the bottom
+                    }
+                });
+        }
+        // Fetch updates every 5 seconds
+        setInterval(fetchUpdates, 5000);  // Adjust interval as needed
+        // Fetch updates initially on page load
+        fetchUpdates();
+    </script>
+</body>
+</html>

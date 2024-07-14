@@ -1,0 +1,4 @@
+{'KARNATAKA': 'Karnataka'}
+Updated cache: {'Karnataka': {'SHIMOGA': 'Shimoga'}}
+Updated cache: {'Shimoga': {'BHADRAVATI': 'Bhadravati'}}
+Updated cache: {'Shimoga': {'BHADRAVATI': 'Bhadravati', 'HOSANAGARA': 'Hosanagara'}}
