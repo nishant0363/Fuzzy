@@ -23,8 +23,8 @@ def upload_file():
         file_path = os.path.join(app.config['UPLOAD_FOLDER'], 'input.csv')
         file.save(file_path)
 
-        # Run the Jupyter notebook
-        subprocess.run(['jupyter', 'nbconvert', '--to', 'notebook', '--execute', '--output', 'process_notebook_output.ipynb', 'process_notebook.ipynb'])
+        # Run the Python script for processing
+        subprocess.run(['python', 'process_data.py'])
 
         output_path = os.path.join(app.config['OUTPUT_FOLDER'], 'output.csv')
         return send_file(output_path, as_attachment=True, download_name='output.csv')
